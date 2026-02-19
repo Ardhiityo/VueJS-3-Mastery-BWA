@@ -1,10 +1,18 @@
 <script>
 export default {
     name: 'TagInput',
-    data: () => ({
-        value: 'tes',
-        tags: ['vue', 'react', 'svelte']
-    }),
+    props: {
+        selectedTags: {
+            type: Array,
+            default: []
+        }
+    },
+    data: function () {
+        return {
+            value: 'tes',
+            tags: this.selectedTags
+        }
+    },
     watch: {
         value(newVal, olVal) {
             if (newVal.includes(',')) {
