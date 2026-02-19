@@ -2,7 +2,13 @@
 export default {
   data: function () {
     return {
-      selectedTags: ['Vue.js', 'React.js', 'Svelte.js']
+      jsFrameworks: ['Vue.js', 'React.js', 'Svelte.js'],
+      otherFrameworks: ['Laravel', 'Flask']
+    }
+  },
+  methods: {
+    handleChange: function (tags) {
+      this.jsFrameworks = [...tags];
     }
   }
 }
@@ -11,8 +17,14 @@ export default {
 <template>
   <section>
     <h1>Hello World</h1>
+
+    <p>{{ jsFrameworks }}</p>
     <!-- Via global import -->
-    <TagInput :selectedTags="selectedTags" />
+    <TagInput :selectedTags="jsFrameworks" @change="handleChange" />
+
+    <p>{{ otherFrameworks }}</p>
+    <!-- Via global import -->
+    <TagInput :selectedTags="otherFrameworks" @change="otherFrameworks = [...$event]" />
   </section>
 </template>
 

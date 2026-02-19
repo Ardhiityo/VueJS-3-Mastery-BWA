@@ -7,10 +7,11 @@ export default {
             default: []
         }
     },
+    emits: ['change'],
     data: function () {
         return {
             value: 'tes',
-            tags: this.selectedTags
+            tags: [...this.selectedTags]
         }
     },
     watch: {
@@ -18,6 +19,7 @@ export default {
             if (newVal.includes(',')) {
                 this.value = newVal.slice(0, -1);
                 this.addNewTag();
+                this.$emit('change', this.tags);
             }
         }
     },
@@ -30,14 +32,17 @@ export default {
         addNewTag: function () {
             if (!this.isTagExists && this.value.length) {
                 this.tags.push(this.value);
+                this.$emit('change', this.tags);
             }
         },
         removeTag: function (index) {
             this.tags.splice(index, 1);
+            this.$emit('change', this.tags);
         },
         removeLastTag: function () {
             if (this.value.length === 0) {
                 this.tags.pop()
+                this.$emit('change', this.tags);
             }
         }
     }
@@ -46,12 +51,12 @@ export default {
 
 <template>
     <section>
-        <div v-for="(tag, index) in tags" :key="index">
+        <!-- <div v-for="(tag, index) in tags" :key="index">
             {{ tag }} <span @click="removeTag(index)">&times;</span>
-        </div>
+        </div> -->
 
         <!-- Digunakan untuk menampilkan teks apa-adanya, apabila memiliki whitespace maka ditampilkan -->
-        <pre>{{ value }}</pre>
+        <!-- <pre>{{ value }}</pre> -->
 
         <!-- Tab.prevent untuk mencegah fokus ke element lain -->
 
