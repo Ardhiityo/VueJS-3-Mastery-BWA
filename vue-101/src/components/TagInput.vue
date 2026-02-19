@@ -45,6 +45,14 @@ export default {
         <!-- Cara baru : 2 flow data binding -->
         <!-- Trim untuk menghapus whitespace -->
         <input type="text" v-model.trim="value" @keydown.backspace="removeLastTags"
-            @keydown.enter="tags.push($event.target.value)" @keydown.tab.prevent="tags.push($event.target.value)">
+            @keydown.enter="tags.push($event.target.value)" @keydown.tab.prevent="tags.push($event.target.value)"
+            :class="{ tagExists: tags.includes(value) }">
     </section>
 </template>
+
+<style scoped>
+.tagExists {
+    color: red;
+    text-decoration: line-through
+}
+</style>
