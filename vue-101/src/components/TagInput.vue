@@ -5,7 +5,17 @@ export default {
         value: 'tes',
         tags: ['vue', 'react', 'svelte']
     }),
+    computed: {
+        isTagExists: function () {
+            return this.tags.includes(this.value);
+        }
+    },
     methods: {
+        addTags: function () {
+            if (!this.isTagExists && this.value.length) {
+                this.tags.push(this.value);
+            }
+        },
         removeTags: function (index) {
             this.tags.splice(index, 1);
         },
@@ -44,9 +54,8 @@ export default {
 
         <!-- Cara baru : 2 flow data binding -->
         <!-- Trim untuk menghapus whitespace -->
-        <input type="text" v-model.trim="value" @keydown.backspace="removeLastTags"
-            @keydown.enter="tags.push($event.target.value)" @keydown.tab.prevent="tags.push($event.target.value)"
-            :class="{ tagExists: tags.includes(value) }">
+        <input type="text" v-model.trim="value" @keydown.backspace="removeLastTags" @keydown.enter="addTags"
+            @keydown.tab.prevent="addTags" :class="{ tagExists: isTagExists }">
     </section>
 </template>
 
