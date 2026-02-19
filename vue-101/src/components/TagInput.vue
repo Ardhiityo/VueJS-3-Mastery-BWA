@@ -5,6 +5,14 @@ export default {
         value: 'tes',
         tags: ['vue', 'react', 'svelte']
     }),
+    watch: {
+        value(newVal, olVal) {
+            if (newVal.includes(',')) {
+                this.value = newVal.slice(0, -1);
+                this.addTags();
+            }
+        }
+    },
     computed: {
         isTagExists: function () {
             return this.tags.includes(this.value);
