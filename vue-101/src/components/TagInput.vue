@@ -4,14 +4,24 @@ export default {
     data: () => ({
         value: 'tes',
         tags: ['vue', 'react', 'svelte']
-    })
+    }),
+    methods: {
+        removeTags: function (index) {
+            this.tags.splice(index, 1);
+        },
+        removeLastTags: function () {
+            if (this.value.length === 0) {
+                this.tags.pop()
+            }
+        }
+    }
 }
 </script>
 
 <template>
     <section>
         <div v-for="(tag, index) in tags" :key="index">
-            {{ tag }}
+            {{ tag }} <span @click="removeTags(index)">&times;</span>
         </div>
 
         <!-- Digunakan untuk menampilkan teks apa-adanya, apabila memiliki whitespace maka ditampilkan -->
@@ -34,7 +44,7 @@ export default {
 
         <!-- Cara baru : 2 flow data binding -->
         <!-- Trim untuk menghapus whitespace -->
-        <input type="text" v-model.trim="value" @keydown.enter="tags.push($event.target.value)"
-            @keydown.tab.prevent="tags.push($event.target.value)">
+        <input type="text" v-model.trim="value" @keydown.backspace="removeLastTags"
+            @keydown.enter="tags.push($event.target.value)" @keydown.tab.prevent="tags.push($event.target.value)">
     </section>
 </template>
