@@ -72,7 +72,11 @@ export default {
     {{ email }} -->
 
     <!-- Multiple v-model binding -->
-    <LoginForm v-model:email.lowercase="email" v-model:password="password" />
-    {{ email }} - {{ password }}
+    <!-- <LoginForm v-model:email.lowercase="email" v-model:password="password" />
+    {{ email }} - {{ password }} -->
+
+    <!-- Falltrough Attributes : terjadi apabila di component hanya memiliki 1 element  -->
+    <!-- class otomatis ditambahkan ke component tanpa harus via props -->
+    <BaseButton class="btn-lg" text="Submit" />
   </div>
 </template>
