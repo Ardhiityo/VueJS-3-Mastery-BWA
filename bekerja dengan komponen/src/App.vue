@@ -46,11 +46,13 @@ export default {
   <div class="container py-5">
     <!-- Props dengan kebab case -->
     <!-- Bila props dengan bind gunakan (:) maka dianggap js syntax -->
-    <Person first-name="Eko" last-name="Khannedy" :age="30" />
+    <!-- <Person first-name="Eko" last-name="Khannedy" :age="30" /> -->
 
     <!-- Bind sekaligus dengan object -->
     <!-- <Alerts v-bind="alert" :items="items" /> -->
 
-    <Alert type="danger" :show="show" @alert-close="show = !show">Hello Vue!</Alert>
+    <!-- <Alert type="danger" :show="show" @alert-close="show = !show">Hello Vue!</Alert> -->
+
+    <LoginForm @submit="handleSubmit" />
   </div>
 </template>
