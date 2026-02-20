@@ -82,8 +82,36 @@ export default {
     <!-- <BaseInput v-model="email" label="email" type="text" /> -->
 
     <!-- Slot -->
-    <Alert :show="show" @click="show = !show">
+    <!-- <Alert :show="show" @click="show = !show">
       <IconCheck /> Hello Alert!
+    </Alert> -->
+
+    <!-- Slot Name -->
+    <!-- <Modal :show="true"> -->
+    <!-- Slot header cara 1-->
+    <!-- <template v-slot:header>Title content</template> -->
+
+    <!-- Slot header cara 2-->
+    <!-- <template #header>Title content</template> -->
+
+    <!-- Slot default cara 1-->
+    <!-- <template v-slot:default>Body content here!</template> -->
+
+    <!-- Slot default cara 2-->
+    <!-- Body content here! -->
+
+    <!-- Slot default -->
+    <!-- <template v-slot:footer>Footer</template> -->
+    <!-- </Modal> -->
+
+    <!-- Scoped slot cara 1 -->
+    <!-- <Alert :show="true" v-slot="scopedSlot">
+      Hello Vue! <a href="" :class="scopedSlot.alertLink">Link</a>
+    </Alert> -->
+
+    <!-- Scoped slot cara 1 -->
+    <Alert :show="true" v-slot="{ alertLink }">
+      Hello Vue! <a href="" :class="alertLink">Link</a>
     </Alert>
   </div>
 </template>
