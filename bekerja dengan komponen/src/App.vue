@@ -110,8 +110,39 @@ export default {
     </Alert> -->
 
     <!-- Scoped slot cara 1 -->
-    <Alert :show="true" v-slot="{ alertLink }">
+    <!-- <Alert :show="true" v-slot="{ alertLink }">
       Hello Vue! <a href="" :class="alertLink">Link</a>
-    </Alert>
+    </Alert> -->
+
+    <!-- Scoped slot parameter cara 1 -->
+    <!-- <TodoList>
+      <template #default="defaultProps">
+        <input type="checkbox" name="" id="" class="form-check-input me-1">
+        {{ defaultProps.name }}
+      </template>
+      <template #footer="{ all, todo, done }">
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">All {{ all }}</span>
+          <span class="text-muted">Todo {{ todo }}</span>
+          <span class="text-muted">Done {{ done }}</span>
+        </div>
+      </template>
+    </TodoList>
+  -->
+
+    <!-- Scoped slot parameter cara 2 -->
+    <TodoList>
+      <template #default="{ name }">
+        <input type="checkbox" name="" id="" class="form-check-input me-1">
+        {{ name }}
+      </template>
+      <template #footer="iniParam">
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">All {{ iniParam.all }}</span>
+          <span class="text-muted">Todo {{ iniParam.todo }}</span>
+          <span class="text-muted">Done {{ iniParam.done }}</span>
+        </div>
+      </template>
+    </TodoList>
   </div>
 </template>
