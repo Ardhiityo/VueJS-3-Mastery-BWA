@@ -79,6 +79,11 @@ export default {
     <!-- class otomatis ditambahkan ke component tanpa harus via props -->
     <!-- <BaseButton class="btn-lg" text="Submit" /> -->
     <!-- type otomatis ditambahkan ke component tanpa harus via props -->
-    <BaseInput v-model="email" label="email" type="text" />
+    <!-- <BaseInput v-model="email" label="email" type="text" /> -->
+
+    <!-- Slot -->
+    <Alert :show="show" @click="show = !show">
+      <IconCheck /> Hello Alert!
+    </Alert>
   </div>
 </template>
