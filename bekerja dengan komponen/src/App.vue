@@ -49,6 +49,8 @@ export default {
     <Person first-name="Eko" last-name="Khannedy" :age="30" />
 
     <!-- Bind sekaligus dengan object -->
-    <Alerts v-bind="alert" :items="items" />
+    <!-- <Alerts v-bind="alert" :items="items" /> -->
+
+    <Alert type="danger" :show="show" @alert-close="show = !show">Hello Vue!</Alert>
   </div>
 </template>
