@@ -1,14 +1,14 @@
 <script>
-import Alerts from "./components/Alerts.vue"
-import LoginForm from "./components/auth/LoginForm.vue"
-import BaseInput from "./components/BaseInput.vue"
-import BaseButton from "./components/BaseButton.vue"
-import IconCheck from "./components/icons/IconCheck.vue"
-import IconExclamation from "./components/icons/IconExclamation.vue"
-import Modal from "./components/Modal.vue"
-import TodoList from "./components/TodoList.vue"
-import Person from "./components/Person.vue"
-import Alert from "./components/Alert.vue"
+import Alerts from "./components/Alerts.vue";
+import LoginForm from "./components/auth/LoginForm.vue";
+import BaseInput from "./components/BaseInput.vue";
+import BaseButton from "./components/BaseButton.vue";
+import IconCheck from "./components/icons/IconCheck.vue";
+import IconExclamation from "./components/icons/IconExclamation.vue";
+import Modal from "./components/Modal.vue";
+import TodoList from "./components/TodoList.vue";
+import Person from "./components/Person.vue";
+import Alert from "./components/Alert.vue";
 
 export default {
   components: {
@@ -21,7 +21,7 @@ export default {
     Modal,
     IconCheck,
     IconExclamation,
-    TodoList
+    TodoList,
   },
   data: () => ({
     items: 3,
@@ -30,16 +30,16 @@ export default {
       message: "Message",
       types: ["success", "warning", "danger"],
     },
-    email: '',
-    password: '',
-    message: "Alert message"
+    email: "",
+    password: "",
+    message: "Alert message",
   }),
   methods: {
     handleSubmit(email, password) {
-      alert(email + ' ' + password);
-    }
-  }
-}
+      alert(email + " " + password);
+    },
+  },
+};
 </script>
 
 <template>
@@ -53,6 +53,21 @@ export default {
 
     <!-- <Alert type="danger" :show="show" @alert-close="show = !show">Hello Vue!</Alert> -->
 
-    <LoginForm @submit="handleSubmit" />
+    <!-- <LoginForm @submit="handleSubmit" /> -->
+
+    <!-- Binding Cara 1 -->
+    <!-- <input type="email" v-model="email">
+    {{ email }} -->
+
+    <!-- Binding Cara 2 -->
+    <!-- <input type="email" :value="email" @input="email = $event.target.value">
+    {{ email }} -->
+
+    <!-- 2 Flow data binding cara lama -->
+    <!-- Sebenarnya Vue mengubah kode tersebut menjadi seperti ini di belakang layar: -->
+    <!-- :modelValue="email" @update:modelValue="email = $event" -->
+
+    <BaseInput label="Email" v-model="email" />
+    {{ email }}
   </div>
 </template>
