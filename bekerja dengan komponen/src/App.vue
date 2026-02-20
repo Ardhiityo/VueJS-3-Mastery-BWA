@@ -9,6 +9,8 @@ import Modal from "./components/Modal.vue";
 import TodoList from "./components/TodoList.vue";
 import Person from "./components/Person.vue";
 import Alert from "./components/Alert.vue";
+import Login from './components/Login.vue';
+import Register from './components/Register.vue';
 
 export default {
   components: {
@@ -22,6 +24,8 @@ export default {
     IconCheck,
     IconExclamation,
     TodoList,
+    Login,
+    Register
   },
   data: () => ({
     items: 3,
@@ -33,6 +37,7 @@ export default {
     email: "",
     password: "",
     message: "Alert message",
+    showForm: 'Login'
   }),
   methods: {
     handleSubmit(email, password) {
@@ -131,7 +136,7 @@ export default {
   -->
 
     <!-- Scoped slot parameter cara 2 -->
-    <TodoList>
+    <!-- <TodoList>
       <template #default="{ name }">
         <input type="checkbox" name="" id="" class="form-check-input me-1">
         {{ name }}
@@ -144,5 +149,17 @@ export default {
         </div>
       </template>
     </TodoList>
+     -->
+
+    <!-- Dynamic Component -->
+    <!-- Keep Alive digunakan apabila berpindah component maka state sebelumnya tetap disimpan -->
+    <section>
+      <button class="btn btn-primary" @click="showForm = 'Login'">Login</button>
+      <button class="btn btn-primary" @click="showForm = 'Register'">Register</button>
+      <KeepAlive>
+        <component :is="showForm" />
+      </KeepAlive>
+    </section>
+
   </div>
 </template>
