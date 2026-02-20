@@ -48,6 +48,7 @@ export default {
     <!-- Bila props dengan bind gunakan (:) maka dianggap js syntax -->
     <Person first-name="Eko" last-name="Khannedy" :age="30" />
 
-    <Alerts v-bind="alert" :show="true" :items="items" />
+    <!-- Bind sekaligus dengan object -->
+    <Alerts v-bind="alert" :items="items" />
   </div>
 </template>

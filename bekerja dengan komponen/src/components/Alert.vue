@@ -7,11 +7,11 @@
 
 <script>
 export default {
-    // props: ['message', 'type', 'show']
     props: {
         type: {
             type: String,
             default: 'primary',
+            // Props validation
             validator: function (value) {
                 return ['success', 'primary', 'danger', 'warning'].includes(value);
             }
