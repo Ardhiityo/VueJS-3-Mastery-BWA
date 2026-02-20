@@ -68,7 +68,11 @@ export default {
     <!-- :modelValue="email" @update:modelValue="email = $event" -->
 
     <!-- Custom modifier -->
-    <BaseInput label="Email" v-model.lowercase="email" />
-    {{ email }}
+    <!-- <BaseInput label="Email" v-model.lowercase="email" />
+    {{ email }} -->
+
+    <!-- Multiple v-model binding -->
+    <LoginForm v-model:email.lowercase="email" v-model:password="password" />
+    {{ email }} - {{ password }}
   </div>
 </template>
