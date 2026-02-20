@@ -15,13 +15,16 @@
         <!-- <input class="form-control" :value="modelValue" @input="handleInput" /> -->
 
         <!-- Custom modifier dengan computed -->
-        <input class="form-control" v-model="value" />
+        <!-- <input class="form-control" v-model="value" /> -->
+
+        <!-- Fallthrgouh Attributes dibanyak element perlu menentukan spesifik element mana yang akan diterapkan dengan $attrs -->
+        <input class="form-control" v-model="value" v-bind="$attrs" />
     </section>
 </template>
 
 <script>
 export default {
-    // inheritAttrs: false,
+    inheritAttrs: false,
     props: {
         label: {
             type: String,

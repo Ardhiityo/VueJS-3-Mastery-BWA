@@ -77,6 +77,8 @@ export default {
 
     <!-- Falltrough Attributes : terjadi apabila di component hanya memiliki 1 element  -->
     <!-- class otomatis ditambahkan ke component tanpa harus via props -->
-    <BaseButton class="btn-lg" text="Submit" />
+    <!-- <BaseButton class="btn-lg" text="Submit" /> -->
+    <!-- type otomatis ditambahkan ke component tanpa harus via props -->
+    <BaseInput v-model="email" label="email" type="text" />
   </div>
 </template>
