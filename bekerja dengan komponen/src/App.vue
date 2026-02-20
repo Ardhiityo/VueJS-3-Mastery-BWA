@@ -67,7 +67,8 @@ export default {
     <!-- Sebenarnya Vue mengubah kode tersebut menjadi seperti ini di belakang layar: -->
     <!-- :modelValue="email" @update:modelValue="email = $event" -->
 
-    <BaseInput label="Email" v-model="email" />
+    <!-- Custom modifier -->
+    <BaseInput label="Email" v-model.lowercase="email" />
     {{ email }}
   </div>
 </template>
