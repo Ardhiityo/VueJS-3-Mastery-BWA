@@ -1,5 +1,5 @@
 <script>
-import { toRefs, reactive, ref, toRef, computed, watch, watchEffect } from 'vue';
+import { toRefs, reactive, ref, toRef, computed, watch, watchEffect, onMounted, onUpdated, onUnmounted } from 'vue';
 import CartItem from './components/CartItem.vue';
 
 export default {
@@ -48,6 +48,9 @@ export default {
     // Secara default beraksi dimulai ketika compoent dimuat
     // watchEffect(() => console.log('total change from watchEffect:', total.value));
 
+    onMounted(() => console.log('Mounted'));
+    onUpdated(() => console.log('Updated'));
+
     const items = reactive([
       {
         id: 1,
@@ -83,15 +86,15 @@ export default {
 <template>
   <section>
     <!-- <h1>{{ message }}</h1> -->
-    <!-- <button @click="increment">Increment</button>
-    <button @click="decrement">Decrement</button>
+    <button @click="increment">Increment</button>
+    <!-- <button @click="decrement">Decrement</button> -->
 
-    <p>{{ product.name }}</p>
+    <!-- <p>{{ product.name }}</p>
     <p>{{ product.price }}</p>
     <button @click="swapProduct">Swap</button> -->
 
-    <!-- Quantity : {{ product.quantity }}
-    Total : {{ total }} -->
+    Quantity : {{ product.quantity }}
+    Total : {{ total }}
 
     <div v-for="(item, index) in items" :key="index">
       <CartItem :item="item" @handle-remove="handleRemove" />

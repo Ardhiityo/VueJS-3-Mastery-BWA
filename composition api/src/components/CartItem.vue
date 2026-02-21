@@ -1,4 +1,5 @@
 <script>
+import { onUnmounted } from 'vue';
 export default {
     props: {
         item: {
@@ -7,6 +8,7 @@ export default {
     },
     emits: ['handleRemove'],
     setup() {
+        onUnmounted(() => console.log('Unmounted'));
         return {
             //
         }
