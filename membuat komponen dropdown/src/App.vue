@@ -4,13 +4,16 @@ import Dropdown from './components/Dropdown.vue';
 export default {
   components: {
     Dropdown
-  }
+  },
+  data: () => ({
+    isOpen: false
+  }),
 }
 </script>
 
 <template>
   <div class="container menu-center">
-    <Dropdown>
+    <Dropdown :class="{ show: isOpen }" @click="isOpen = !isOpen">
       <template #trigger>
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">
           Dropdown button
