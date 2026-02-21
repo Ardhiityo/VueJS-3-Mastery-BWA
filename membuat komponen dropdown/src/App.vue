@@ -1,9 +1,13 @@
 <script>
 import Dropdown from './components/Dropdown.vue';
+import DropdownItem from './components/DropdownItem.vue';
+import DropdownTrigger from './components/DropdownTrigger.vue';
 
 export default {
   components: {
-    Dropdown
+    Dropdown,
+    DropdownItem,
+    DropdownTrigger
   },
   data: () => ({
     isOpen: false
@@ -15,14 +19,12 @@ export default {
   <div class="container menu-center">
     <Dropdown :class="{ show: isOpen }" @click="isOpen = !isOpen">
       <template #trigger>
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">
-          Dropdown button
-        </button>
+        <DropdownTrigger>Dropdown button</DropdownTrigger>
       </template>
       <template #menu>
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <DropdownItem>Action</DropdownItem>
+        <DropdownItem>Another action</DropdownItem>
+        <DropdownItem>Something else here</DropdownItem>
       </template>
     </Dropdown>
   </div>
