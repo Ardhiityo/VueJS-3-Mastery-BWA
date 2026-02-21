@@ -1,6 +1,7 @@
 <script>
 import { toRefs, reactive, ref, toRef, computed, watch, watchEffect, onMounted, onUpdated, onUnmounted } from 'vue';
 import CartItem from './components/CartItem.vue';
+import useCart from './useCart.js';
 
 export default {
   components: {
@@ -51,23 +52,7 @@ export default {
     onMounted(() => console.log('Mounted'));
     onUpdated(() => console.log('Updated'));
 
-    const items = reactive([
-      {
-        id: 1,
-        name: 'Abcde',
-        price: 12000
-      }
-    ]);
-
-    const handleRemove = (id) => {
-      let index = null;
-      items.forEach((data, key) => {
-        if (data.id === id) {
-          index = key;
-        }
-        items.splice(index, 1)
-      });
-    }
+    const { handleRemove, items } = useCart();
 
     return {
       message,
