@@ -1,71 +1,54 @@
-<script>
+<script setup>
 import { toRefs, reactive, ref, toRef, computed, watch, watchEffect, onMounted, onUpdated, onUnmounted } from 'vue';
 import CartItem from './components/CartItem.vue';
 import useCart from './useCart.js';
 
-export default {
-  components: {
-    CartItem
-  },
-  setup() {
-    const message = 'Hello Vue!';
+const message = 'Hello Vue!';
 
-    const product = reactive({
-      name: 'Product A',
-      price: 20000,
-      quantity: 0
-    })
+const product = reactive({
+  name: 'Product A',
+  price: 20000,
+  quantity: 0
+})
 
-    const swapProduct = () => {
-      product.name = 'Product B';
-      product.price = 10000;
-    }
-
-    const increment = () => product.quantity++;
-    const decrement = () => product.quantity--;
-    const total = computed(() => product.quantity * product.price);
-
-    /**
-     * toRef dan toRefs dipakai khusus untuk properti dalam object reactive, supaya tetap sinkron.
-     */
-    // const toref = toRef(product, 'name');
-    // console.log(toref.value);
-
-    // product.name = 'Product B';
-    // console.log('Change toref :', toref.value);
-
-    // const torefs = toRefs(product);
-    // console.log(torefs.name.value);
-
-    // product.name = 'Product C';
-    // console.log('Change torefs :', torefs.name.value);
-
-    // Immediate membuat rekasi dimulai dari component dimuat
-    // Secara default hanya bereaksi ketika property berubah saja
-    // watch(total, () => console.log('total change from watch: ', total.value), {
-    //   immediate: true
-    // })
-
-    // Secara default beraksi dimulai ketika compoent dimuat
-    // watchEffect(() => console.log('total change from watchEffect:', total.value));
-
-    onMounted(() => console.log('Mounted'));
-    onUpdated(() => console.log('Updated'));
-
-    const { handleRemove, items } = useCart();
-
-    return {
-      message,
-      increment,
-      decrement,
-      product,
-      swapProduct,
-      total,
-      items,
-      handleRemove
-    }
-  }
+const swapProduct = () => {
+  product.name = 'Product B';
+  product.price = 10000;
 }
+
+const increment = () => product.quantity++;
+const decrement = () => product.quantity--;
+const total = computed(() => product.quantity * product.price);
+
+/**
+ * toRef dan toRefs dipakai khusus untuk properti dalam object reactive, supaya tetap sinkron.
+ */
+// const toref = toRef(product, 'name');
+// console.log(toref.value);
+
+// product.name = 'Product B';
+// console.log('Change toref :', toref.value);
+
+// const torefs = toRefs(product);
+// console.log(torefs.name.value);
+
+// product.name = 'Product C';
+// console.log('Change torefs :', torefs.name.value);
+
+// Immediate membuat rekasi dimulai dari component dimuat
+// Secara default hanya bereaksi ketika property berubah saja
+// watch(total, () => console.log('total change from watch: ', total.value), {
+//   immediate: true
+// })
+
+// Secara default beraksi dimulai ketika compoent dimuat
+// watchEffect(() => console.log('total change from watchEffect:', total.value));
+
+onMounted(() => console.log('Mounted'));
+onUpdated(() => console.log('Updated'));
+
+const { handleRemove, items } = useCart();
+
 </script>
 
 <template>

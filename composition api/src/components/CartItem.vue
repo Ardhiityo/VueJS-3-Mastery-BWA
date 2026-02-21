@@ -1,19 +1,14 @@
-<script>
-import { onUnmounted } from 'vue';
-export default {
-    props: {
-        item: {
-            type: Object,
-        }
-    },
-    emits: ['handleRemove'],
-    setup() {
-        onUnmounted(() => console.log('Unmounted'));
-        return {
-            //
-        }
+<script setup>
+import { onUnmounted, defineProps } from 'vue';
+
+defineProps({
+    item: {
+        type: Object,
     }
-}
+})
+
+defineEmits(['handleRemove'])
+onUnmounted(() => console.log('Unmounted'));
 </script>
 
 <template>
