@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+import { provide, reactive, ref } from 'vue';
 
 export default {
   setup() {
@@ -9,11 +9,23 @@ export default {
     const increment = () => quantity.value++;
     const decrement = () => quantity.value--;
 
+    const product = reactive({
+      name: 'Product A',
+      price: 20000
+    })
+
+    const swapProduct = () => {
+      product.name = 'Product B';
+      product.price = 10000;
+    }
+
     return {
       message,
       quantity,
       increment,
-      decrement
+      decrement,
+      product,
+      swapProduct
     }
   }
 }
@@ -25,6 +37,10 @@ export default {
     <h1>{{ quantity }}</h1>
     <button @click="increment">Increment</button>
     <button @click="decrement">Decrement</button>
+
+    <p>{{ product.name }}</p>
+    <p>{{ product.price }}</p>
+    <button @click="swapProduct">Swap</button>
   </section>
 </template>
 
