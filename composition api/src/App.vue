@@ -1,5 +1,5 @@
 <script>
-import { provide, reactive, ref } from 'vue';
+import { toRefs, reactive, ref, toRef } from 'vue';
 
 export default {
   setup() {
@@ -18,6 +18,21 @@ export default {
       product.name = 'Product B';
       product.price = 10000;
     }
+
+    /**
+     * toRef dan toRefs dipakai khusus untuk properti dalam object reactive, supaya tetap sinkron.
+     */
+    const toref = toRef(product, 'name');
+    console.log(toref.value);
+
+    product.name = 'Product B';
+    console.log('Change toref :', toref.value);
+
+    const torefs = toRefs(product);
+    console.log(torefs.name.value);
+
+    product.name = 'Product C';
+    console.log('Change torefs :', torefs.name.value);
 
     return {
       message,
