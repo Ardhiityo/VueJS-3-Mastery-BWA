@@ -1,4 +1,5 @@
 <script>
+import { onClickOutside } from '@vueuse/core';
 import Dropdown from './components/Dropdown.vue';
 import DropdownItem from './components/DropdownItem.vue';
 import DropdownTrigger from './components/DropdownTrigger.vue';
@@ -10,8 +11,24 @@ export default {
     DropdownTrigger
   },
   data: () => ({
-    isOpen: false
+    isOpen: false,
+    stopOutside: null
   }),
+  mounted() {
+    // pasang listener klik luar pada elemen dropdown
+    const target = this.$el.querySelector('.container .dropdown')
+    // atau bisa pakai this.$refs jika Anda menambahkan ref
+
+    this.stopOutside = onClickOutside(target, () => {
+      this.isOpen = false
+    })
+  },
+  beforeUnmount() {
+    // bersihkan listener
+    if (this.stopOutside) {
+      this.stopOutside()
+    }
+  }
 }
 </script>
 
