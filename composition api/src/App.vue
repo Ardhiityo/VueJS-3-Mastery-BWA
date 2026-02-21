@@ -1,5 +1,5 @@
 <script>
-import { toRefs, reactive, ref, toRef, computed } from 'vue';
+import { toRefs, reactive, ref, toRef, computed, watch, watchEffect } from 'vue';
 
 export default {
   setup() {
@@ -34,6 +34,15 @@ export default {
 
     // product.name = 'Product C';
     // console.log('Change torefs :', torefs.name.value);
+
+    // Immediate membuat rekasi dimulai dari component dimuat
+    // Secara default hanya bereaksi ketika property berubah saja
+    watch(total, () => console.log('total change from watch: ', total.value), {
+      immediate: true
+    })
+
+    // Secara default beraksi dimulai ketika compoent dimuat
+    watchEffect(() => console.log('total change from watchEffect:', total.value));
 
     return {
       message,
