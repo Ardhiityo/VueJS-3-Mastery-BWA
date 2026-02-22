@@ -12,7 +12,15 @@ onMounted(async () => {
 })
 
 const completedTasks = computed(() => tasks.value.filter(item => item.is_completed));
-const uncompletedTasks = computed(() => tasks.value.filter(item => !item.is_completed)); 
+const uncompletedTasks = computed(() => tasks.value.filter(item => !item.is_completed));
+
+const showUncompletedTask = ref(true);
+
+const handleShowToggle = () => showUncompletedTask.value = !showUncompletedTask.value;
+
+const titleToggle = computed(() => showUncompletedTask.value ? 'Show' : 'Hide');
+
+const showToggle = computed(() => completedTasks.value.length);
 </script>
 
 <template>
@@ -28,8 +36,15 @@ const uncompletedTasks = computed(() => tasks.value.filter(item => !item.is_comp
                     <!-- List of uncompleted tasks -->
                     <Tasks :tasks="uncompletedTasks" />
 
+                    <!--Toggle show tasks -->
+                    <div class="my-3 d-flex" v-if="showToggle">
+                        <button class="btn btn-primary mx-auto" @click="handleShowToggle">
+                            {{ titleToggle }} completed tasks
+                        </button>
+                    </div>
+
                     <!-- List of completed tasks -->
-                    <Tasks :tasks="completedTasks" />
+                    <Tasks :tasks="completedTasks" v-if="showUncompletedTask" />
                 </div>
             </div>
         </div>
