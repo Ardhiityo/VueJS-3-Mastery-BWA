@@ -1,3 +1,18 @@
+<script setup>
+
+import { onMounted, ref } from 'vue';
+import { getTasks } from '../http/task-api';
+
+const tasks = ref([]);
+
+onMounted(async () => {
+    const { data } = await getTasks();
+    tasks.value = data;
+    console.log(data);
+})
+
+</script>
+
 <template>
     <main style="min-height: 50vh; margin-top: 2rem;">
         <div class="container">
