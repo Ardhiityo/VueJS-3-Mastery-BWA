@@ -3,14 +3,14 @@ import { ref } from 'vue';
 import Autocomplete from './components/Autocomplete.vue';
 import source from "./source.json";
 
-const selectedKeyword = ref('');
-const handleSelectedKeyword = (name) => selectedKeyword.value = name; 
+const keyword = ref('');
 </script>
 
 <template>
-  <section>
-    <h1>Selected : {{ selectedKeyword }}</h1>
-    <Autocomplete :source="source" @selected-keyword="handleSelectedKeyword" />
+  <section class="w-1/2 mx-auto min-h-screen flex items-center">
+    <Autocomplete :source="source" v-model:keyword="keyword">
+      Selected : {{ keyword }}
+    </Autocomplete>
   </section>
 </template>
 

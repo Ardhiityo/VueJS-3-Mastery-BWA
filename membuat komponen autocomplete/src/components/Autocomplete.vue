@@ -11,8 +11,8 @@ const { source } = defineProps({
     }
 })
 
-const keyword = ref('');
-const emit = defineEmits(['selectedKeyword', 'update:modelValue']);
+const keyword = defineModel('keyword');
+
 const keywordFound = ref(false);
 const selectedKeyword = ref('');
 
@@ -28,10 +28,9 @@ const result = computed(() => {
 });
 
 const handleSelectedKeyword = (name) => {
-    keyword.value = name
+    keyword.value = name.charAt(0).toUpperCase() + name.slice(1);
     keywordFound.value = true;
     selectedKeyword.value = name;
-    emit('selectedKeyword', name);
 };
 
 watch(keyword, (newValue, oldValue) => {
@@ -40,12 +39,24 @@ watch(keyword, (newValue, oldValue) => {
 </script>
 
 <template>
-    <section>
-        <input type="text" v-model="keyword">
-        <ul>
-            <li v-for="(item, index) in result" :key="index" @click="handleSelectedKeyword(item.name)">
-                {{ item.name }}
-            </li>
-        </ul>
-    </section>
+    <div class="w-full">
+        <label for="price" class="block text-sm/6 font-medium text-gray-900">
+            <slot></slot>
+        </label>
+        <div class="mt-2">
+            <div
+                class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+                <input id="price" type="text" name="price" placeholder="Search..."
+                    class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                    v-model="keyword" />
+            </div>
+            <div>
+                <ul>
+                    <li v-for="(item, index) in result" :key="index" @click="handleSelectedKeyword(item.name)">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </template>
