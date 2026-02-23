@@ -14,8 +14,9 @@ onMounted(async () => {
     tasks.value = data.data;
 })
 
-const completedTasks = computed(() => tasks.value.filter(item => item.is_completed));
-const uncompletedTasks = computed(() => tasks.value.filter(item => !item.is_completed));
+const store = storeToRefs(useTask());
+
+const { completedTasks, uncompletedTasks } = store;
 
 const showUncompletedTask = ref(true);
 
@@ -57,28 +58,29 @@ async function handleRemoveTask(id) {
     }
 }
 
-onMounted(() => {
-
-    // Define pinia without reactivity
-    const taskPinia = useTask();
-
-    // Define pinia with reactivity
-    const taskPiniaToRefs = storeToRefs(useTask());
-
-    // Update state pinia cara 1
-    // taskPinia.task.name = 'Update task';
-    // taskPinia.task.is_completed = false;
-
-    // Update state pinia cara 2
-    taskPinia.$patch({
-        task: {
-            name: 'Update from $patch',
-            is_completed: false
-        }
-    })
-
-    console.log(taskPiniaToRefs.task.value)
-})
+/**
+ onMounted(() => {
+     // Define pinia without reactivity
+     const taskPinia = useTask();
+ 
+     // Define pinia with reactivity
+     const taskPiniaToRefs = storeToRefs(useTask());
+ 
+     // Update state pinia cara 1
+     // taskPinia.task.name = 'Update task';
+     // taskPinia.task.is_completed = false;
+ 
+     // Update state pinia cara 2
+     taskPinia.$patch({
+         task: {
+             name: 'Update from $patch',
+             is_completed: false
+         }
+     })
+ 
+     console.log(taskPiniaToRefs.task.value)
+ })
+ */
 </script>
 
 <template>
