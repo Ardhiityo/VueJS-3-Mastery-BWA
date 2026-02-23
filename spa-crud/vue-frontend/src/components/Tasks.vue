@@ -1,6 +1,5 @@
 <script setup>
 import Task from "../components/Task.vue"
-
 import { defineProps, defineEmits } from "vue";
 
 const { tasks } = defineProps({

@@ -4,6 +4,8 @@ import { onMounted, ref, computed } from 'vue';
 import { getTasks, createTask, updateTask, completeTask, deleteTask } from '../http/task-api';
 import Tasks from '../components/Tasks.vue';
 import AddTask from '../components/AddTask.vue';
+import { useTask } from "../stores/task.js"
+import { storeToRefs } from 'pinia';
 
 const tasks = ref([]);
 
@@ -54,6 +56,29 @@ async function handleRemoveTask(id) {
         tasks.value.splice(index, 1);
     }
 }
+
+onMounted(() => {
+
+    // Define pinia without reactivity
+    const taskPinia = useTask();
+
+    // Define pinia with reactivity
+    const taskPiniaToRefs = storeToRefs(useTask());
+
+    // Update state pinia cara 1
+    // taskPinia.task.name = 'Update task';
+    // taskPinia.task.is_completed = false;
+
+    // Update state pinia cara 2
+    taskPinia.$patch({
+        task: {
+            name: 'Update from $patch',
+            is_completed: false
+        }
+    })
+
+    console.log(taskPiniaToRefs.task.value)
+})
 </script>
 
 <template>
