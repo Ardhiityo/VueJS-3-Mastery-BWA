@@ -1,22 +1,20 @@
 <script setup>
 
 import { onMounted, ref, computed } from 'vue';
-import { getTasks, createTask, updateTask, completeTask, deleteTask } from '../http/task-api';
+import { createTask, updateTask, completeTask, deleteTask } from '../http/task-api';
 import Tasks from '../components/Tasks.vue';
 import AddTask from '../components/AddTask.vue';
 import { useTask } from "../stores/task.js"
 import { storeToRefs } from 'pinia';
 
-const tasks = ref([]);
+const taskStore = useTask();
 
-onMounted(async () => {
-    const { data } = await getTasks();
-    tasks.value = data.data;
-})
+// storeToRefs: hanya untuk state dan computed properties → menghasilkan refs
+const { completedTasks, uncompletedTasks, tasks } = storeToRefs(taskStore);
 
-const store = storeToRefs(useTask());
+const { fetchTasks } = taskStore;
 
-const { completedTasks, uncompletedTasks } = store;
+onMounted(async () => await fetchTasks());
 
 const showUncompletedTask = ref(true);
 
