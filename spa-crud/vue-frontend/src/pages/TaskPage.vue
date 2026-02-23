@@ -1,8 +1,9 @@
 <script setup>
 
 import { onMounted, ref, computed } from 'vue';
-import { getTasks } from '../http/task-api';
+import { getTasks, createTask } from '../http/task-api';
 import Tasks from '../components/Tasks.vue';
+import AddTask from '../components/AddTask.vue';
 
 const tasks = ref([]);
 
@@ -21,6 +22,14 @@ const handleShowToggle = () => showUncompletedTask.value = !showUncompletedTask.
 const titleToggle = computed(() => showUncompletedTask.value ? 'Show' : 'Hide');
 
 const showToggle = computed(() => completedTasks.value.length);
+
+async function handleAddTask(task) {
+    const response = await createTask({ name: task });
+    if (response.status === 201) {
+        const value = await response.data.data;
+        tasks.value.unshift(value);
+    }
+}
 </script>
 
 <template>
@@ -29,10 +38,7 @@ const showToggle = computed(() => completedTasks.value.length);
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <!-- Add new Task -->
-                    <div class="relative">
-                        <input type="text" class="form-control form-control-lg padding-right-lg"
-                            placeholder="+ Add new task. Press enter to save." />
-                    </div>
+                    <AddTask @handleAddTask="handleAddTask" />
                     <!-- List of uncompleted tasks -->
                     <Tasks :tasks="uncompletedTasks" />
 
