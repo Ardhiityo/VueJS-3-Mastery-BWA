@@ -13,12 +13,12 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <!-- Cara 1 -->
-                        <!-- <RouterLink :to="{ name: 'task' }" class="nav-link">Tasks</RouterLink> -->
+                        <RouterLink :to="{ name: 'task' }" class="nav-link">Tasks</RouterLink>
                         <!-- Cara 2 -->
-                        <a href="#" @click="$router.push({ name: 'task' })" class="nav-link">Tasks</a>
+                        <!-- <a href="#" @click="$router.push({ name: 'task' })" class="nav-link">Tasks</a> -->
                     </li>
                     <li class="nav-item">
-                        <a href="summaries.html" class="nav-link">Summary</a>
+                        <RouterLink :to="{ name: 'summary' }" class="nav-link">Summary</RouterLink>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -36,3 +36,10 @@
         </div>
     </nav>
 </template>
+
+<style scoped>
+/* Hanya diterapkan pada element yang punya 2 class berikut, apabila hanya 1 element memiliki salahsatu dari class berikut maka tidak akan diterpkan */
+.nav-link.router-link-exact-active {
+    color: rgba(0, 0, 0, .9);
+}
+</style>
