@@ -12,7 +12,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <RouterLink :to="{ name: 'task' }" class="nav-link">Tasks</RouterLink>
+                        <!-- Cara 1 -->
+                        <!-- <RouterLink :to="{ name: 'task' }" class="nav-link">Tasks</RouterLink> -->
+                        <!-- Cara 2 -->
+                        <a href="#" @click="$router.push({ name: 'task' })" class="nav-link">Tasks</a>
                     </li>
                     <li class="nav-item">
                         <a href="summaries.html" class="nav-link">Summary</a>
