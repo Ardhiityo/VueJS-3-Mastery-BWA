@@ -1,7 +1,6 @@
 <script setup>
 import { defineProps, defineEmits, computed, ref } from 'vue';
 import TaskAction from './TaskAction.vue';
-import { updateTask } from '../http/task-api';
 
 const { task } = defineProps({
     task: {
@@ -15,6 +14,8 @@ const isCompletedTask = computed(() => task.is_completed ? true : false);
 
 const isEdit = ref(false);
 
+const taskField = ref(task.name);
+
 // Custom directive : Penamaan variabel bebas
 const vFocus = {
     mounted: (el) => el.focus()
@@ -22,6 +23,11 @@ const vFocus = {
 
 function handleUpdateTask(newTask) {
     emit('updateTask', { ...task, newTask });
+}
+
+function undo() {
+    isEdit.value = !isEdit.value;
+    taskField.value = task.name;
 }
 </script>
 
@@ -32,8 +38,8 @@ function handleUpdateTask(newTask) {
             <div class="ms-2 flex-grow-1" :class="{ completed: isCompletedTask }"
                 title="Double click the text to edit or remove" @dblclick="isEdit = !isEdit">
                 <div class="relative" v-if="isEdit">
-                    <input class="editable-task" type="text" @keyup.esc="isEdit = !isEdit" v-focus
-                        @keyup.enter="handleUpdateTask($event.target.value)" />
+                    <input class="editable-task" type="text" @keyup.esc="undo" v-focus
+                        @keyup.enter="handleUpdateTask($event.target.value)" v-model="taskField" />
                 </div>
                 <span v-else>{{ task.name }}</span>
             </div>
