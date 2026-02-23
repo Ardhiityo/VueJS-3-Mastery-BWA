@@ -1,10 +1,8 @@
 <script setup>
-
 import { onMounted, ref, computed } from 'vue';
-import { createTask, updateTask, completeTask, deleteTask } from '../http/task-api';
+import { useTask } from "../stores/task.js"
 import Tasks from '../components/Tasks.vue';
 import AddTask from '../components/AddTask.vue';
-import { useTask } from "../stores/task.js"
 import { storeToRefs } from 'pinia';
 
 const taskStore = useTask();
@@ -23,38 +21,6 @@ const handleShowToggle = () => showUncompletedTask.value = !showUncompletedTask.
 const titleToggle = computed(() => showUncompletedTask.value ? 'Show' : 'Hide');
 
 const showToggle = computed(() => completedTasks.value.length);
-
-async function handleAddTask(task) {
-    const response = await createTask({ name: task });
-    if (response.status === 201) {
-        const value = await response.data.data;
-        tasks.value.unshift(value);
-    }
-}
-
-async function handleUpdateTask(task) {
-    const response = await updateTask(task.id, { name: task.newTask })
-    if (response.status === 200) {
-        const oldTask = tasks.value.find(item => item.id === task.id);
-        oldTask.name = task.newTask;
-    }
-}
-
-async function handleCompleteTask(task) {
-    const response = await completeTask(task.id, { is_completed: !task.is_completed });
-    if (response.status === 200) {
-        const currentTask = tasks.value.find(item => item.id === task.id);
-        currentTask.is_completed = !task.is_completed;
-    }
-}
-
-async function handleRemoveTask(id) {
-    const response = await deleteTask(id);
-    if (response.status === 204) {
-        const index = tasks.value.findIndex(item => item.id === id);
-        tasks.value.splice(index, 1);
-    }
-}
 
 /**
  onMounted(() => {
@@ -87,10 +53,9 @@ async function handleRemoveTask(id) {
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <!-- Add new Task -->
-                    <AddTask @handleAddTask="handleAddTask" />
+                    <AddTask />
                     <!-- List of uncompleted tasks -->
-                    <Tasks :tasks="uncompletedTasks" @updateTask="handleUpdateTask" @completeTask="handleCompleteTask"
-                        @removeTask="handleRemoveTask" />
+                    <Tasks :tasks="uncompletedTasks" />
 
                     <!--Toggle show tasks -->
                     <div class="my-3 d-flex" v-if="showToggle">
@@ -100,8 +65,7 @@ async function handleRemoveTask(id) {
                     </div>
 
                     <!-- List of completed tasks -->
-                    <Tasks :tasks="completedTasks" v-if="showUncompletedTask" @updateTask="handleUpdateTask"
-                        @completeTask="handleCompleteTask" @removeTask="handleRemoveTask" />
+                    <Tasks :tasks="completedTasks" v-if="showUncompletedTask" />
                 </div>
             </div>
         </div>

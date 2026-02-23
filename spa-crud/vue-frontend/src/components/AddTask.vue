@@ -1,13 +1,14 @@
 <script setup>
-import { ref, defineEmits, computed } from "vue";
+import { ref, computed } from "vue";
+import { useTask } from "../stores/task";
 
-const emit = defineEmits(['handleAddTask'])
+const { handleAddTask } = useTask();
 
 const task = ref('');
 
-const handleAddTask = computed(() => {
+const addTask = computed(() => {
     if (task.value.trim().length) {
-        emit('handleAddTask', task.value)
+        handleAddTask(task.value)
         task.value = '';
     }
 });
@@ -16,6 +17,6 @@ const handleAddTask = computed(() => {
 <template>
     <div class="relative">
         <input type="text" v-model="task" class="form-control form-control-lg padding-right-lg"
-            placeholder="+ Add new task. Press enter to save." @keydown.enter="handleAddTask" />
+            placeholder="+ Add new task. Press enter to save." @keydown.enter="addTask" />
     </div>
 </template>
