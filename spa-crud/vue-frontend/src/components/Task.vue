@@ -8,7 +8,7 @@ const { task } = defineProps({
     },
 })
 
-const emit = defineEmits(['updateTask', 'completeTask']);
+const emit = defineEmits(['updateTask', 'completeTask', 'removeTask']);
 
 const isCompletedTask = computed(() => task.is_completed ? true : false);
 
@@ -46,6 +46,6 @@ function undo() {
             </div>
             <div class="task-date">24 Feb 12:00</div>
         </div>
-        <TaskAction @edit="isEdit = !isEdit" v-if="!isEdit" />
+        <TaskAction @edit="isEdit = !isEdit" @remove="$emit('removeTask', task.id)" v-if="!isEdit" />
     </li>
 </template>

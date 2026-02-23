@@ -4,12 +4,12 @@ import TrashIcon from './icons/TrashIcon.vue'
 
 import { defineEmits } from 'vue';
 
-defineEmits(['edit']);
+defineEmits(['edit', 'remove']);
 </script>
 
 <template>
     <div class="task-actions">
         <PencilIcon @click="$emit('edit')" />
-        <TrashIcon />
+        <TrashIcon @click="$emit('remove')" />
     </div>
 </template>
