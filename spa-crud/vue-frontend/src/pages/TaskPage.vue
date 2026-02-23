@@ -1,7 +1,7 @@
 <script setup>
 
 import { onMounted, ref, computed } from 'vue';
-import { getTasks, createTask, updateTask } from '../http/task-api';
+import { getTasks, createTask, updateTask, completeTask } from '../http/task-api';
 import Tasks from '../components/Tasks.vue';
 import AddTask from '../components/AddTask.vue';
 
@@ -38,6 +38,14 @@ async function handleUpdateTask(task) {
         oldTask.name = task.newTask;
     }
 }
+
+async function handleCompleteTask(task) {
+    const response = await completeTask(task.id, { is_completed: !task.is_completed });
+    if (response.status === 200) {
+        const currentTask = tasks.value.find(item => item.id === task.id);
+        currentTask.is_completed = !task.is_completed;
+    }
+}
 </script>
 
 <template>
@@ -48,7 +56,8 @@ async function handleUpdateTask(task) {
                     <!-- Add new Task -->
                     <AddTask @handleAddTask="handleAddTask" />
                     <!-- List of uncompleted tasks -->
-                    <Tasks :tasks="uncompletedTasks" @updateTask="handleUpdateTask" />
+                    <Tasks :tasks="uncompletedTasks" @updateTask="handleUpdateTask"
+                        @completeTask="handleCompleteTask" />
 
                     <!--Toggle show tasks -->
                     <div class="my-3 d-flex" v-if="showToggle">
@@ -58,7 +67,8 @@ async function handleUpdateTask(task) {
                     </div>
 
                     <!-- List of completed tasks -->
-                    <Tasks :tasks="completedTasks" v-if="showUncompletedTask" />
+                    <Tasks :tasks="completedTasks" v-if="showUncompletedTask" @updateTask="handleUpdateTask"
+                        @completeTask="handleCompleteTask" />
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ const { task } = defineProps({
     },
 })
 
-const emit = defineEmits(['updateTask']);
+const emit = defineEmits(['updateTask', 'completeTask']);
 
 const isCompletedTask = computed(() => task.is_completed ? true : false);
 
@@ -34,7 +34,8 @@ function undo() {
 <template>
     <li class="list-group-item py-3">
         <div class="d-flex justify-content-start align-items-center">
-            <input class="form-check-input mt-0" type="checkbox" :checked="isCompletedTask" />
+            <input class="form-check-input mt-0" type="checkbox" :checked="isCompletedTask"
+                @click="$emit('completeTask', task)" />
             <div class="ms-2 flex-grow-1" :class="{ completed: isCompletedTask }"
                 title="Double click the text to edit or remove" @dblclick="isEdit = !isEdit">
                 <div class="relative" v-if="isEdit">

@@ -8,6 +8,7 @@ export const createTask = (data) => api.post(resource, data);
 
 export const updateTask = (id, data) => api.patch(`${resource}/${id}`, data);
 
-export const completeTask = (id) => api.patch(`${resource}/${id}/complete`);
+export const completeTask = (id, data) =>
+  api.patch(`${resource}/${id}/complete`, data);
 
 export const deleteTask = (id) => api.delete(`${resource}/${id}`, data);

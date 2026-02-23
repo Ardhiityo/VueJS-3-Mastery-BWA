@@ -9,14 +9,15 @@ const { tasks } = defineProps({
     }
 })
 
-const emit = defineEmits(['updateTask']);
+const emit = defineEmits(['updateTask', 'completeTask']);
 </script>
 
 <template>
     <section>
         <div class="card mt-2" v-for="task in tasks" :key="task.id">
             <ul class="list-group list-group-flush">
-                <Task :task="task" @updateTask="$emit('updateTask', $event)" />
+                <Task :task="task" @updateTask="$emit('updateTask', $event)"
+                    @completeTask="$emit('completeTask', $event)" />
             </ul>
         </div>
     </section>
