@@ -1,7 +1,7 @@
 <script setup>
 
 import { onMounted, ref, computed } from 'vue';
-import { getTasks, createTask } from '../http/task-api';
+import { getTasks, createTask, updateTask } from '../http/task-api';
 import Tasks from '../components/Tasks.vue';
 import AddTask from '../components/AddTask.vue';
 
@@ -30,6 +30,14 @@ async function handleAddTask(task) {
         tasks.value.unshift(value);
     }
 }
+
+async function handleUpdateTask(task) {
+    const response = await updateTask(task.id, { name: task.newTask })
+    if (response.status === 200) {
+        const oldTask = tasks.value.find(item => item.id === task.id);
+        oldTask.name = task.newTask;
+    }
+}
 </script>
 
 <template>
@@ -40,7 +48,7 @@ async function handleAddTask(task) {
                     <!-- Add new Task -->
                     <AddTask @handleAddTask="handleAddTask" />
                     <!-- List of uncompleted tasks -->
-                    <Tasks :tasks="uncompletedTasks" />
+                    <Tasks :tasks="uncompletedTasks" @updateTask="handleUpdateTask" />
 
                     <!--Toggle show tasks -->
                     <div class="my-3 d-flex" v-if="showToggle">
