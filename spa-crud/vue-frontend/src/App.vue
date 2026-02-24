@@ -6,11 +6,11 @@ import Footer from './components/Footer.vue';
 <template>
   <section>
     <Navbar />
-    <Transition>
-      <RouterView v-slot="{ Component }">
-        <component :is="Component"></component>
-      </RouterView>
-    </Transition>
+    <RouterView v-slot="{ Component, route }">
+      <Transition mode="out-in">
+        <component :is="Component" :key="route.fullPath" />
+      </Transition>
+    </RouterView>
     <Footer />
   </section>
 </template>
@@ -19,7 +19,7 @@ import Footer from './components/Footer.vue';
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 2s ease;
+  transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
