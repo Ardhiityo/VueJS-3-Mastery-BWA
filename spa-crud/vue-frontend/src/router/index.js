@@ -11,9 +11,11 @@ const router = createRouter({
 
 // Navigation guard
 router.beforeEach((to, from) => {
-  // ...
-  // explicitly return false to cancel the navigation
-  return false;
+  if (to.meta.auth) {
+    return {
+      name: "login",
+    };
+  }
 });
 
 export default router;

@@ -19,11 +19,18 @@ const routes = [
     path: "/tasks",
     name: "task",
     component: TaskPage,
+    meta: {
+      // Nama property bebas
+      auth: true,
+    },
   },
   {
     path: "/summaries",
     name: "summary",
     component: SummaryPage,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/:pathMatch",
