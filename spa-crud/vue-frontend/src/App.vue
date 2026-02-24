@@ -6,9 +6,24 @@ import Footer from './components/Footer.vue';
 <template>
   <section>
     <Navbar />
-    <RouterView />
+    <Transition>
+      <RouterView v-slot="{ Component }">
+        <component :is="Component"></component>
+      </RouterView>
+    </Transition>
     <Footer />
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
