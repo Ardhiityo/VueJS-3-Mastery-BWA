@@ -9,4 +9,11 @@ const router = createRouter({
   // linkActiveClass: "active",
 });
 
+// Navigation guard
+router.beforeEach((to, from) => {
+  // ...
+  // explicitly return false to cancel the navigation
+  return false;
+});
+
 export default router;
