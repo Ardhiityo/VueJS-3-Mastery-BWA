@@ -11,12 +11,16 @@ const router = createRouter({
 
 // Navigation guard
 router.beforeEach(async (to, from) => {
-  const store = useAuth();
-  await store.fetchUser();
-  if (to.meta.auth && !store.isLogged) {
-    return {
-      name: "login",
-    };
+  if (to.meta.auth) {
+    const {fetchUser, isLogged} = useAuth();
+    await fetchUser();
+    console.log(isLogged);
+    console.log(isLogged.value);
+    if (!isLogged.value) {
+      return {
+        name: "login",
+      };
+    }
   }
 });
 

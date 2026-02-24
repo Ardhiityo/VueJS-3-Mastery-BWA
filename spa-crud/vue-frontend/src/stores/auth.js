@@ -22,7 +22,9 @@ export const useAuth = defineStore("useAuth", () => {
     });
     if (loginResponse.status === 200 && csrfResponse.status === 204) {
       user.value = loginResponse.data.user;
+      return true;
     }
+    return false;
   };
 
   const handleRegister = async (user) => {
@@ -34,19 +36,24 @@ export const useAuth = defineStore("useAuth", () => {
     const loginResponse = await login(user);
     if (registerResponse.status === 200 && loginResponse.status === 200) {
       user.value = registerResponse.data.user;
+      return true;
     }
+    return false;
   };
 
   const handleLogout = async () => {
     const response = await logout();
     if (response.status === 200) {
       user.value = null;
+      return true;
     }
+    return false;
   };
 
   return {
     fetchUser,
     handleLogin,
+    handleLogout,
     handleRegister,
     isLogged,
   };
