@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -24,6 +23,8 @@ class LoginController extends Controller
                 'email' => ['The credentials you entered are incorrect.']
             ]);
         }
+
+        Auth::login($user);
 
         return response()->json([
             'user' => $user,

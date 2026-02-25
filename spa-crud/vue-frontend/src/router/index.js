@@ -12,11 +12,9 @@ const router = createRouter({
 // Navigation guard
 router.beforeEach(async (to, from) => {
   if (to.meta.auth) {
-    const {fetchUser, isLogged} = useAuth();
+    const {fetchUser, isLogged, user} = useAuth();
     await fetchUser();
-    console.log(isLogged);
-    console.log(isLogged.value);
-    if (!isLogged.value) {
+    if (!isLogged) {
       return {
         name: "login",
       };

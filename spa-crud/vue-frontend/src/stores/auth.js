@@ -56,5 +56,6 @@ export const useAuth = defineStore("useAuth", () => {
     handleLogout,
     handleRegister,
     isLogged,
+    user
   };
 });
