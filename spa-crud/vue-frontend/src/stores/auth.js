@@ -25,6 +25,7 @@ export const useAuth = defineStore("useAuth", () => {
         password: credentials.password,
       });
       user.value = data.user;
+      errors.value = {};
       return true;
     } catch (error) {
       // response hasil dari object axios 
@@ -34,17 +35,20 @@ export const useAuth = defineStore("useAuth", () => {
   };
 
   const handleRegister = async (user) => {
-    const registerResponse = await register({
-      name: user.name,
-      email: user.email,
-      password: user.password,
-    });
-    const loginResponse = await login(user);
-    if (registerResponse.status === 200 && loginResponse.status === 200) {
-      user.value = registerResponse.data.user;
+    try {
+     const {data} = await register({
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        password_confirmation: user.password_confirmation,
+      });
+      await login(user);
+      user.value = data.user;
       return true;
+    } catch (error) {
+      errors.value = error.response.data.errors;
+      return false;
     }
-    return false;
   };
 
   const handleLogout = async () => {
