@@ -1,3 +1,20 @@
+<script setup>
+import { useAuth } from "../stores/auth";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+
+const useAuthStore = useAuth();
+
+const { isLogged } = storeToRefs(useAuthStore);
+
+const router = useRouter();
+
+const handleLogout = () => {
+  useAuthStore.handleLogout();
+  router.push({ name: "login" });
+};
+</script>
+
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <div class="container py-2">
@@ -33,21 +50,30 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <RouterLink
-              :to="{ name: 'login' }"
-              class="btn btn-outline-secondary ms-2"
-              >Login</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink :to="{ name: 'register' }" class="btn btn-danger ms-2"
-              >Register</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <a href="#" class="btn btn-outline-secondary ms-2">Logout</a>
-          </li>
+          <template v-if="!isLogged">
+            <li class="nav-item">
+              <RouterLink
+                :to="{ name: 'login' }"
+                class="btn btn-outline-secondary ms-2"
+                >Login</RouterLink
+              >
+            </li>
+            <li class="nav-item">
+              <RouterLink :to="{ name: 'register' }" class="btn btn-danger ms-2"
+                >Register</RouterLink
+              >
+            </li>
+          </template>
+          <template v-else>
+            <li class="nav-item">
+              <a
+                href="#"
+                @click="handleLogout"
+                class="btn btn-outline-secondary ms-2"
+                >Logout</a
+              >
+            </li>
+          </template>
         </ul>
       </div>
     </div>

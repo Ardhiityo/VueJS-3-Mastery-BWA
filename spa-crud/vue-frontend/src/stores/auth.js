@@ -8,9 +8,11 @@ export const useAuth = defineStore("useAuth", () => {
   const isLogged = computed(() => (user.value ? true : false));
 
   const fetchUser = async () => {
-    const response = await getUser();
-    if (response.status === 200) {
+    try {
+      const response = await getUser();
       user.value = response.data;
+    } catch (error) {
+      user.value = null; 
     }
   };
 
