@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use App\Models\Priority;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -19,7 +20,8 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'is_completed' => (bool) $this->is_completed,
-            'priority' => PriorityResource::make($this->whenLoaded('priority'))
+            'priority' => PriorityResource::make($this->whenLoaded('priority')),
+            'created_at' => Carbon::parse($this->created_at)->format('d M')
         ];
     }
 }

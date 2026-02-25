@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue';
-import { useTask } from "../stores/task.js"
-import Tasks from '../components/Tasks.vue';
-import AddTask from '../components/AddTask.vue';
-import { storeToRefs } from 'pinia';
+import { onMounted, ref, computed } from "vue";
+import { useTask } from "../stores/task.js";
+import Tasks from "../components/Tasks.vue";
+import AddTask from "../components/AddTask.vue";
+import { storeToRefs } from "pinia";
 
 const taskStore = useTask();
 
@@ -14,11 +14,12 @@ const { fetchTasks } = taskStore;
 
 onMounted(async () => await fetchTasks());
 
-const showUncompletedTask = ref(true);
+const showCompletedTask = ref(true);
 
-const handleShowToggle = () => showUncompletedTask.value = !showUncompletedTask.value;
+const handleShowToggle = () =>
+  (showCompletedTask.value = !showCompletedTask.value);
 
-const titleToggle = computed(() => showUncompletedTask.value ? 'Show' : 'Hide');
+const titleToggle = computed(() => (showCompletedTask.value ? "Hide" : "Show"));
 
 const showToggle = computed(() => completedTasks.value.length);
 
@@ -48,26 +49,26 @@ const showToggle = computed(() => completedTasks.value.length);
 </script>
 
 <template>
-    <main style="min-height: 50vh; margin-top: 2rem;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <!-- Add new Task -->
-                    <AddTask />
-                    <!-- List of uncompleted tasks -->
-                    <Tasks :tasks="uncompletedTasks" />
+  <main style="min-height: 50vh; margin-top: 2rem">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <!-- Add new Task -->
+          <AddTask />
+          <!-- List of uncompleted tasks -->
+          <Tasks :tasks="uncompletedTasks" />
 
-                    <!--Toggle show tasks -->
-                    <div class="my-3 d-flex" v-if="showToggle">
-                        <button class="btn btn-primary mx-auto" @click="handleShowToggle">
-                            {{ titleToggle }} completed tasks
-                        </button>
-                    </div>
+          <!--Toggle show tasks -->
+          <div class="my-3 d-flex" v-if="showToggle">
+            <button class="btn btn-primary mx-auto" @click="handleShowToggle">
+              {{ titleToggle }} completed tasks
+            </button>
+          </div>
 
-                    <!-- List of completed tasks -->
-                    <Tasks :tasks="completedTasks" v-if="showUncompletedTask" />
-                </div>
-            </div>
+          <!-- List of completed tasks -->
+          <Tasks :tasks="completedTasks" v-if="showCompletedTask" />
         </div>
-    </main>
+      </div>
+    </div>
+  </main>
 </template>
