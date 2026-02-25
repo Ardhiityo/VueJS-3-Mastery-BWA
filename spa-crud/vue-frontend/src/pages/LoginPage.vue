@@ -2,9 +2,15 @@
 import { reactive } from "vue";
 import { useAuth } from "../stores/auth";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
-const { handleLogin } = useAuth();
+
+const authStore = useAuth();
+
+const { handleLogin } = authStore;
+
+const { errors } = storeToRefs(authStore);
 
 const form = reactive({
   email: "",
@@ -15,7 +21,6 @@ async function handleSubmit() {
   if (await handleLogin(form)) {
     return router.push({ name: "task" });
   }
-  alert("Ups, something wrong!");
 }
 </script>
 
@@ -34,8 +39,12 @@ async function handleSubmit() {
           v-model="form.email"
           id="email"
           placeholder="name@example.com"
+          required
         />
         <label for="email">Email</label>
+        <p class="fw-semibold text-start text-danger" v-if="errors.email">
+          {{ errors.email[0] }}
+        </p>
       </div>
       <div class="form-floating mb-3">
         <input

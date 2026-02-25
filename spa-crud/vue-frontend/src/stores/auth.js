@@ -6,6 +6,7 @@ export const useAuth = defineStore("useAuth", () => {
   const user = ref(null);
 
   const isLogged = computed(() => (user.value ? true : false));
+  const errors = ref({});
 
   const fetchUser = async () => {
     try {
@@ -17,16 +18,19 @@ export const useAuth = defineStore("useAuth", () => {
   };
 
   const handleLogin = async (credentials) => {
-    const csrfResponse = await csrfCookie();
-    const loginResponse = await login({
-      email: credentials.email,
-      password: credentials.password,
-    });
-    if (loginResponse.status === 200 && csrfResponse.status === 204) {
-      user.value = loginResponse.data.user;
+    try {
+      await csrfCookie();
+      const {data} = await login({
+        email: credentials.email,
+        password: credentials.password,
+      });
+      user.value = data.user;
       return true;
+    } catch (error) {
+      // response hasil dari object axios 
+      errors.value = error.response.data.errors;
+      return false; 
     }
-    return false;
   };
 
   const handleRegister = async (user) => {
@@ -58,6 +62,7 @@ export const useAuth = defineStore("useAuth", () => {
     handleLogout,
     handleRegister,
     isLogged,
-    user
+    user,
+    errors
   };
 });
