@@ -1,6 +1,7 @@
 import {createWebHistory, createRouter} from "vue-router";
 import routes from "./routes";
 import {useAuth} from "../stores/auth";
+import { storeToRefs } from "pinia";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,14 +12,24 @@ const router = createRouter({
 
 // Navigation guard
 router.beforeEach(async (to, from) => {
+  const useAuthStore = useAuth();
+
+  const {isLogged} = storeToRefs(useAuthStore);
+  
+  await useAuthStore.fetchUser();
+  
   if (to.meta.auth) {
-    const {fetchUser, isLogged, user} = useAuth();
-    await fetchUser();
-    if (!isLogged) {
+    if (!isLogged.value) {
       return {
         name: "login",
       };
     }
+  }
+  
+  if (to.meta.guest && isLogged.value) {
+    return {
+      name: "task",
+    };
   }
 });
 
