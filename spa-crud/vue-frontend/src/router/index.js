@@ -20,7 +20,9 @@ router.beforeEach(async (to, from) => {
     return {
       name: "login",
     };
-  } else if (to.meta.guest && isLogged.value) {
+  }
+  
+  if (to.meta.guest && isLogged.value) {
     return {
       name: "task",
     };

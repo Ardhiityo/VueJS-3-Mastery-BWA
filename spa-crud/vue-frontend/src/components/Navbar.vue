@@ -1,17 +1,22 @@
 <script setup>
-import { useAuth } from "../stores/auth";
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useAuth } from "../stores/auth";
 
 const useAuthStore = useAuth();
 
-const { isLogged } = storeToRefs(useAuthStore);
+const { isLogged, user } = storeToRefs(useAuthStore);
 
 const router = useRouter();
 
-const handleLogout = () => {
-  useAuthStore.handleLogout();
-  router.push({ name: "login" });
+const showDropdown = ref(false);
+
+const handleLogout = async () => {
+  if (await useAuthStore.handleLogout()) {
+    showDropdown.value = false;
+    router.push({ name: "login" });
+  }
 };
 </script>
 
@@ -65,14 +70,22 @@ const handleLogout = () => {
             </li>
           </template>
           <template v-else>
-            <li class="nav-item">
-              <a
-                href="#"
-                @click="handleLogout"
-                class="btn btn-outline-secondary ms-2"
-                >Logout</a
+            <div class="dropdown">
+              <span
+                role="button"
+                class="dropdown-toggle"
+                @click="showDropdown = !showDropdown"
               >
-            </li>
+                {{ user.name }}
+              </span>
+              <ul class="dropdown-menu" :class="{ show: showDropdown }">
+                <li>
+                  <button class="dropdown-item" @click="handleLogout">
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
           </template>
         </ul>
       </div>
